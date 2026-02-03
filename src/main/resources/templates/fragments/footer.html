@@ -1,0 +1,14 @@
+<footer xmlns:th="http://www.thymeleaf.org" th:fragment="footer" class="site-footer">
+    <div class="footer-inner">
+        <p class="muted" style="margin:0;">
+            <span th:text="${authorName} ?: 'Автор'">Автор</span> ·
+            <span th:text="${footerNote} ?: 'Стихи на заказ'">Стихи на заказ</span>
+        </p>
+
+        <p class="muted" style="margin:.4rem 0 0 0;">
+            <a th:href="@{/contacts}">Контакты</a>
+            <span aria-hidden="true"> · </span>
+            <a th:href="@{/order}">Сделать заказ</a>
+        </p>
+    </div>
+</footer>

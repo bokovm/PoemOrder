@@ -1,0 +1,82 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/public :: layout(~{::content})">
+
+<div th:fragment="content" class="stack">
+
+    <section class="hero">
+        <h1 th:text="${heroTitle} ?: 'Стихи на заказ'">Стихи на заказ</h1>
+        <p class="lead"
+           th:text="${heroText} ?: 'Пишу авторские стихи: поздравления, признания, свадьбы, юбилеи. По твоей истории и под нужный стиль.'">
+            Пишу авторские стихи: поздравления, признания, свадьбы, юбилеи. По твоей истории и под нужный стиль.
+        </p>
+
+        <div class="row">
+            <a class="btn btn-primary" th:href="@{/order}">Заказать стих</a>
+            <a class="btn" th:href="@{/reviews}">Смотреть отзывы</a>
+        </div>
+
+        <ul class="bullets">
+            <li>Обычный текст, без шаблонов</li>
+            <li>Точно под повод и человека</li>
+            <li>Можно лирично, торжественно или с юмором</li>
+        </ul>
+    </section>
+
+    <section class="card">
+        <h2>Как это работает</h2>
+        <ol class="steps">
+            <li>Ты пишешь, что нужно (повод, кому, стиль, детали).</li>
+            <li>Если надо — я уточняю пару вопросов.</li>
+            <li>Отправляю готовый текст. Можно попросить правки по смыслу.</li>
+        </ol>
+    </section>
+
+    <section class="stack">
+        <div class="section-head">
+            <h2>Портфолио</h2>
+            <!-- если отдельной страницы портфолио нет — кнопку можно убрать -->
+            <span class="muted">Несколько примеров</span>
+        </div>
+
+        <div class="grid">
+            <div class="card" th:if="${featuredPoems == null || featuredPoems.isEmpty()}">
+                <p style="margin:0;">Примеры скоро появятся.</p>
+            </div>
+
+            <article class="card" th:each="p : ${featuredPoems}">
+                <h3 class="h3" th:text="${p.title}">Название</h3>
+                <p class="muted" th:text="${p.excerpt}">Короткий отрывок...</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="stack">
+        <div class="section-head">
+            <h2>Отзывы</h2>
+            <a class="link" th:href="@{/reviews}">Все отзывы</a>
+        </div>
+
+        <div class="grid">
+            <div class="card" th:if="${featuredReviews == null || featuredReviews.isEmpty()}">
+                <p style="margin:0;">Пока нет опубликованных отзывов.</p>
+            </div>
+
+            <article class="card" th:each="r : ${featuredReviews}">
+                <p class="muted" style="margin:0 0 .4rem 0;">
+                    <strong th:text="${r.name}">Имя</strong>
+                    <span th:if="${r.telegramPublic} and ${r.telegramUsername != null}"
+                          th:text="' · @' + ${r.telegramUsername}"> · @username</span>
+                </p>
+                <p style="margin:0;" th:text="${r.text}">Текст отзыва...</p>
+            </article>
+        </div>
+
+        <div class="row">
+            <a class="btn btn-primary" th:href="@{/order}">Сделать заказ</a>
+            <a class="btn" th:href="@{/reviews}">Оставить отзыв</a>
+        </div>
+    </section>
+
+</div>
+</html>

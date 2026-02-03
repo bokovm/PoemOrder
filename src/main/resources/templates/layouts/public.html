@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(content)">
+
+<head th:replace="fragments/head :: head">
+    <!-- fragments/head.html -->
+</head>
+
+<body>
+
+<header th:replace="fragments/header :: header"></header>
+
+<main class="container">
+    <!-- Глобальные сообщения (успех/ошибка) -->
+    <div th:replace="fragments/alerts :: alerts"></div>
+
+    <!-- Контент конкретной страницы -->
+    <div th:replace="${content}"></div>
+</main>
+
+<footer th:replace="fragments/footer :: footer"></footer>
+
+<script defer th:src="@{/js/app.js}"></script>
+</body>
+</html>

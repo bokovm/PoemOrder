@@ -1,0 +1,13 @@
+<head xmlns:th="http://www.thymeleaf.org" th:fragment="head">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <title th:text="${pageTitle} ?: 'Стихи на заказ'">Стихи на заказ</title>
+    <meta name="description"
+          th:content="${pageDescription} ?: 'Авторские стихи на заказ. Поздравления, признания, свадьбы, юбилеи.'"
+          content="Авторские стихи на заказ. Поздравления, признания, свадьбы, юбилеи." />
+
+    <meta name="theme-color" content="#111111" />
+
+    <link rel="stylesheet" th:href="@{/css/public.css}" />
+</head>
