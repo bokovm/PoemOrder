@@ -10,7 +10,7 @@
 
 <header th:replace="fragments/header :: header"></header>
 
-<main class="container">
+<main class="wrap">
     <!-- Глобальные сообщения (успех/ошибка) -->
     <div th:replace="fragments/alerts :: alerts"></div>
 
@@ -20,6 +20,6 @@
 
 <footer th:replace="fragments/footer :: footer"></footer>
 
-<script defer th:src="@{/js/app.js}"></script>
+<!-- <script defer th:src="@{/js/app.js}"></script> -->
 </body>
 </html>

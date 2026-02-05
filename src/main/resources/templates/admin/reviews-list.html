@@ -1,0 +1,79 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/admin :: layout(~{::content})">
+
+<div th:fragment="content">
+    <h1>Отзывы</h1>
+
+    <p th:if="${okMessage}" th:text="${okMessage}"></p>
+
+    <h2>На модерации</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Отзыв</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="r : ${pending}">
+            <td>
+                <strong th:text="${r.name}">Имя</strong><br>
+                <span th:text="${r.text}">Текст</span><br>
+                <span th:if="${r.telegramUsername != null}">
+                    <small th:text="'@' + ${r.telegramUsername}"></small>
+                </span>
+            </td>
+            <td>
+                <form th:action="@{'/admin/reviews/' + ${r.id} + '/approve'}" method="post" style="display:inline;">
+                    <button type="submit">Принять</button>
+                </form>
+
+                <form th:action="@{'/admin/reviews/' + ${r.id} + '/delete'}" method="post" style="display:inline;">
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${pending == null || pending.isEmpty()}">
+            <td colspan="2">Нет отзывов на модерации.</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2 style="margin-top:24px;">Опубликованные</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Отзыв</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="r : ${approved}">
+            <td>
+                <strong th:text="${r.name}">Имя</strong><br>
+                <span th:text="${r.text}">Текст</span><br>
+                <span th:if="${r.telegramPublic} and ${r.telegramUsername != null}">
+                    <small th:text="'@' + ${r.telegramUsername}"></small>
+                </span>
+            </td>
+            <td>
+                <form th:if="${r.telegramUsername != null}"
+                      th:action="@{'/admin/reviews/' + ${r.id} + '/hide-contact'}"
+                      method="post" style="display:inline;">
+                    <button type="submit">Скрыть контакт</button>
+                </form>
+
+                <form th:action="@{'/admin/reviews/' + ${r.id} + '/delete'}" method="post" style="display:inline;">
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+        </tr>
+        <tr th:if="${approved == null || approved.isEmpty()}">
+            <td colspan="2">Нет опубликованных отзывов.</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</html>

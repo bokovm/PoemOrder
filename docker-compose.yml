@@ -6,8 +6,6 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-poems}
       POSTGRES_USER: ${POSTGRES_USER:-poems}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-poems}
-      SPRING_SECURITY_USER_NAME: admin
-      SPRING_SECURITY_USER_PASSWORD: admin12345
     ports:
       - "5432:5432"
     volumes:
@@ -24,16 +22,15 @@ services:
       dockerfile: Dockerfile
     container_name: poems_app
     environment:
-      # Spring Datasource
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-poems}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-poems}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-poems}
 
-      # Профиль (по умолчанию local)
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-local}
-
-      # На всякий: порт
       SERVER_PORT: 8081
+
+      APP_ADMIN_USERNAME: ${APP_ADMIN_USERNAME:-admin}
+      APP_ADMIN_PASSWORD: ${APP_ADMIN_PASSWORD:-admin}
     ports:
       - "8081:8081"
     depends_on:

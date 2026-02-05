@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Вход в админку</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<div class="wrap">
+    <nav class="nav">
+        <a th:href="@{/}">← На сайт</a>
+    </nav>
+
+    <hr class="hr">
+
+    <h1>Вход</h1>
+    <p class="small">Только для администратора.</p>
+
+    <div th:if="${param.error}" class="alert">
+        Неверные данные. Попробуй ещё раз.
+    </div>
+    <div th:if="${param.logout}" class="alert">
+        Ты вышел из админки.
+    </div>
+
+    <form method="post" th:action="@{/admin/login}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+        <label for="username">Логин</label>
+        <input id="username" name="username" autocomplete="username" required>
+
+        <label for="password">Пароль</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+
+        <div class="actions">
+            <button class="btn" type="submit">Войти</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

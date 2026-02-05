@@ -1,0 +1,39 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/admin :: layout(~{::content})">
+
+<div th:fragment="content" class="stack">
+
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+        <h1 style="margin:0;">Портфолио</h1>
+        <a class="btn" th:href="@{/admin/portfolio/new}">Добавить</a>
+    </div>
+
+    <div class="card" th:if="${items == null || items.isEmpty()}">
+        <p style="margin:0;">Пока ничего нет.</p>
+    </div>
+
+    <div class="table" th:if="${items != null && !items.isEmpty()}">
+        <div class="row head">
+            <div>Название</div>
+            <div>Тип</div>
+            <div>Статус</div>
+            <div></div>
+        </div>
+
+        <div class="row" th:each="it : ${items}">
+            <div th:text="${it.title}">Title</div>
+            <div th:text="${it.kind}">POEM</div>
+            <div th:text="${it.status}">DRAFT</div>
+            <div style="display:flex; gap:8px; justify-content:flex-end;">
+                <a th:href="@{|/admin/portfolio/${it.id}/edit|}">Редактировать</a>
+                <form th:action="@{|/admin/portfolio/${it.id}/delete|}" method="post" style="margin:0;"
+                      onsubmit="return confirm('Удалить?');">
+                    <button class="link" type="submit">Удалить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+</html>

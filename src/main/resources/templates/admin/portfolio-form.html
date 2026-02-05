@@ -1,0 +1,53 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/admin :: layout(~{::content})">
+
+<div th:fragment="content" class="stack">
+
+    <h1 th:text="${item.id == null ? 'Новая работа' : 'Редактирование'}">Редактирование</h1>
+
+    <form class="stack"
+          th:action="${item.id == null} ? @{/admin/portfolio/new} : @{|/admin/portfolio/${item.id}/edit|}"
+          method="post" th:object="${item}">
+
+        <div class="form-group">
+            <label>Название *</label>
+            <input class="input" type="text" th:field="*{title}" maxlength="120" required/>
+        </div>
+
+        <div class="form-group">
+            <label>Коротко (для главной)</label>
+            <textarea class="textarea" th:field="*{excerpt}" maxlength="400" rows="3"></textarea>
+            <p class="muted" style="margin:6px 0 0;">Если пусто — на главной будет обрезка из полного текста.</p>
+        </div>
+
+        <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <div class="form-group" style="min-width:220px;">
+                <label>Тип</label>
+                <select class="input" th:field="*{kind}">
+                    <option th:each="k : ${kinds}" th:value="${k}" th:text="${k}">POEM</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="min-width:220px;">
+                <label>Статус</label>
+                <select class="input" th:field="*{status}">
+                    <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}">DRAFT</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Полный текст *</label>
+            <textarea class="textarea" th:field="*{body}" rows="14" required></textarea>
+            <p class="muted" style="margin:6px 0 0;">HTML не поддерживается. Вставляй обычный текст.</p>
+        </div>
+
+        <div style="display:flex; gap:12px;">
+            <button class="btn" type="submit">Сохранить</button>
+            <a th:href="@{/admin/portfolio}">Назад</a>
+        </div>
+    </form>
+
+</div>
+</html>

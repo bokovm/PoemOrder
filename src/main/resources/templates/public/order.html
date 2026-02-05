@@ -2,68 +2,53 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="layouts/public :: layout(~{::content})">
 
-<div th:fragment="content" class="stack">
+<div th:fragment="content">
 
-    <header class="page-head">
-        <h1>Заказать стих</h1>
-        <p class="muted" style="margin:0;">
-            Заполни форму — заказ сохранится, и я получу уведомление.
-        </p>
-    </header>
+    <h1>Заказать стих</h1>
+    <p class="small" style="margin-bottom:0;">
+        Заполни форму — заказ сохранится, и я получу уведомление.
+    </p>
 
-    <section class="card stack">
-        <form th:action="@{/order}" method="post" th:object="${orderForm}" class="stack">
+    <hr class="hr" />
 
-            <!-- honeypot -->
-            <div class="hp">
-                <label>Не заполнять</label>
-                <input type="text" name="website" autocomplete="off" tabindex="-1" />
-            </div>
+    <form th:action="@{/order}" method="post" th:object="${orderForm}">
 
-            <div class="form-group">
-                <label for="name">Имя *</label>
-                <input id="name" class="input" type="text" th:field="*{name}" maxlength="80"
-                       autocomplete="name" required />
-                <div th:replace="fragments/form-errors :: fieldErrors('name')"></div>
-            </div>
+        <!-- honeypot -->
+        <div class="hp">
+            <label>Не заполнять</label>
+            <input type="text" name="website" autocomplete="off" tabindex="-1" />
+        </div>
 
-            <div class="form-group">
-                <label for="phone">Телефон *</label>
-                <input id="phone" class="input" type="tel" th:field="*{phone}" maxlength="30"
-                       autocomplete="tel" required />
-                <div th:replace="fragments/form-errors :: fieldErrors('phone')"></div>
-            </div>
+        <label for="name">Имя *</label>
+        <input id="name" type="text" th:field="*{name}" maxlength="80" autocomplete="name" required />
+        <div th:replace="fragments/form-errors :: fieldErrors('name')"></div>
 
-            <div class="form-group">
-                <label for="social">Соцсеть / мессенджер</label>
-                <input id="social" class="input" type="text" th:field="*{social}" maxlength="80"
-                       placeholder="Telegram/VK/WhatsApp/..." autocomplete="off" />
-                <div th:replace="fragments/form-errors :: fieldErrors('social')"></div>
-            </div>
+        <label for="phone">Телефон *</label>
+        <input id="phone" type="tel" th:field="*{phone}" maxlength="30" autocomplete="tel" required />
+        <div th:replace="fragments/form-errors :: fieldErrors('phone')"></div>
 
-            <div class="form-group">
-                <label for="description">Описание заказа *</label>
-                <textarea id="description" class="textarea" rows="7" th:field="*{description}" maxlength="4000"
-                          placeholder="Повод, кому, детали, стиль, пожелания..." required></textarea>
-                <div th:replace="fragments/form-errors :: fieldErrors('description')"></div>
-            </div>
+        <label for="social">Соцсеть / мессенджер</label>
+        <input id="social" type="text" th:field="*{social}" maxlength="80"
+               placeholder="Telegram/VK/WhatsApp/..." autocomplete="off" />
+        <div th:replace="fragments/form-errors :: fieldErrors('social')"></div>
 
-            <div class="row">
-                <button class="btn btn-primary" type="submit">Отправить заказ</button>
-                <span class="muted">Нажимая, ты подтверждаешь отправку данных для связи.</span>
-            </div>
+        <label for="description">Описание заказа *</label>
+        <textarea id="description" th:field="*{description}" maxlength="4000"
+                  placeholder="Повод, кому, детали, стиль, пожелания..." required></textarea>
+        <div th:replace="fragments/form-errors :: fieldErrors('description')"></div>
 
-        </form>
-    </section>
+        <div class="actions">
+            <button class="btn" type="submit">Отправить</button>
+            <span class="small">Нажимая, ты подтверждаешь отправку данных для связи.</span>
+        </div>
 
-    <section class="card">
-        <h2 class="h2">Что лучше указать</h2>
-        <ul class="bullets">
-            <li>Кому стих и какие факты важны</li>
-            <li>Тон: серьёзно / романтично / шутливо</li>
-            <li>Любимые слова, имена, даты (если нужно)</li>
-        </ul>
-    </section>
+    </form>
+
+    <hr class="hr" />
+
+    <p class="small" style="margin:0;">
+        Что лучше указать: кому стих, важные факты, тон (серьёзно/романтично/шутливо), имена/даты.
+    </p>
 
 </div>
 </html>

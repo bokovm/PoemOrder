@@ -1,15 +1,17 @@
 <header xmlns:th="http://www.thymeleaf.org" th:fragment="header" class="site-header">
-    <div class="header-inner">
-        <a class="brand" th:href="@{/}">
-            <span class="brand-title" th:text="${siteName} ?: 'Стихи на заказ'">Стихи на заказ</span>
-            <span class="brand-sub" th:text="${authorName} ?: 'Автор'">Автор</span>
-        </a>
+    <div class="wrap">
 
         <nav class="nav">
+            <a class="brand" th:href="@{/}">
+                <strong th:text="${siteName} ?: 'Стихи на заказ'">Стихи на заказ</strong>
+                <span class="small" th:text="${authorName} ?: 'Автор'">Алексей Боков</span>
+            </a>
+
             <a th:href="@{/}" th:classappend="${activePage}=='home' ? ' is-active' : ''">Главная</a>
             <a th:href="@{/reviews}" th:classappend="${activePage}=='reviews' ? ' is-active' : ''">Отзывы</a>
             <a th:href="@{/contacts}" th:classappend="${activePage}=='contacts' ? ' is-active' : ''">Контакты</a>
-            <a class="btn btn-primary" th:href="@{/order}">Заказать</a>
+            <a th:href="@{/order}" th:classappend="${activePage}=='order' ? ' is-active' : ''">Заказать</a>
         </nav>
+
     </div>
 </header>

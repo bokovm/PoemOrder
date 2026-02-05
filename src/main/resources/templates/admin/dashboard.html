@@ -1,0 +1,20 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru"
+      th:replace="layouts/admin :: layout(~{::content})">
+
+<div th:fragment="content">
+    <h1>Dashboard</h1>
+    <p class="small">Пока минимально. Потом добавим: посещения / заказы / конверсию.</p>
+
+    <hr class="hr">
+
+    <ul class="list">
+        <li class="item">
+            <strong>Быстрые ссылки</strong><br>
+            <a th:href="@{/admin/reviews}">Модерация отзывов</a><br>
+            <a th:href="@{/admin/orders}">Список заказов</a><br>
+            <a th:href="@{/admin/poems}">Стихи</a>
+        </li>
+    </ul>
+</div>
+</html>

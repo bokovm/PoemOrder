@@ -1,0 +1,33 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru" th:fragment="layout(content)">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title th:text="${pageTitle} ?: 'Админка'">Админка</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<div class="wrap">
+    <nav class="nav">
+        <a th:href="@{/admin/dashboard}">Dashboard</a>
+        <a th:href="@{/admin/poems}">Стихи</a>
+        <a th:href="@{/admin/orders}">Заказы</a>
+        <a th:href="@{/admin/reviews}">Отзывы</a>
+        <a th:href="@{/admin/portfolio}">Портфолио</a>
+        <a th:href="@{/admin/settings}">Настройки</a>
+        <span style="flex:1"></span>
+        <form th:action="@{/admin/logout}" method="post" style="margin:0">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button class="btn" type="submit">Выйти</button>
+        </form>
+    </nav>
+
+    <hr class="hr">
+
+    <main th:replace="${content}"></main>
+
+    <hr class="hr">
+    <p class="small">Админ-панель</p>
+</div>
+</body>
+</html>

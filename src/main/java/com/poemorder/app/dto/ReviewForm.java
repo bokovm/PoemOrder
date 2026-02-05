@@ -1,12 +1,24 @@
 package com.poemorder.app.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class ReviewForm {
+
+    @NotBlank(message = "Укажи имя")
+    @Size(max = 50, message = "Имя слишком длинное")
     private String name;
+
+    @NotBlank(message = "Напиши текст отзыва")
+    @Size(max = 2000, message = "Слишком длинный отзыв")
     private String text;
+
+    @Size(max = 32, message = "Слишком длинный username")
     private String telegramUsername;
+
     private boolean telegramPublic;
 
-    // honeypot
+    // honeypot (антибот). В шаблоне есть input name="website"
     private String website;
 
     public String getName() { return name; }

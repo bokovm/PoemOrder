@@ -2,52 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="layouts/public :: layout(~{::content})">
 
-<div th:fragment="content" class="stack">
+<div th:fragment="content">
 
-    <header class="page-head">
-        <h1>Контакты</h1>
-        <p class="muted" style="margin:0;">
-            Пиши удобным способом — отвечу и уточню детали заказа.
-        </p>
-    </header>
+    <h1>Контакты</h1>
+    <p class="small" style="margin-bottom:0;">
+        Пиши удобным способом — отвечу и уточню детали заказа.
+    </p>
 
-    <section class="grid">
-        <div class="card">
-            <h2 class="h2">Telegram</h2>
-            <p class="muted" style="margin:0 0 .6rem 0;">
-                Быстрее всего отвечаю в Telegram.
+    <hr class="hr" />
+
+    <ul class="list">
+        <li class="item">
+            <p style="margin:0 0 6px;"><strong>Telegram</strong></p>
+            <p class="small" style="margin:0;">
+                <strong>@</strong><span th:text="${settings.telegram} ?: 'username'">username</span>
             </p>
-            <p style="margin:0;">
-                <strong>@</strong><span th:text="${telegram} ?: 'username'">username</span>
-            </p>
-        </div>
+        </li>
 
-        <div class="card">
-            <h2 class="h2">Телефон</h2>
-            <p class="muted" style="margin:0 0 .6rem 0;">
-                Можно звонок/мессенджер.
-            </p>
-            <p style="margin:0;" th:text="${phone} ?: '+7 (___) ___-__-__'">+7 (___) ___-__-__</p>
-        </div>
+        <li class="item">
+            <p style="margin:0 0 6px;"><strong>Телефон</strong></p>
+            <p class="small" style="margin:0;" th:text="${settings.phone} ?: '+7 (___) ___-__-__'">+7 (___) ___-__-__</p>
+        </li>
 
-        <div class="card">
-            <h2 class="h2">Соцсеть</h2>
-            <p class="muted" style="margin:0 0 .6rem 0;">
-                Если удобнее — напиши в соцсети.
-            </p>
-            <p style="margin:0;" th:text="${social} ?: 'VK / Instagram / другое'">VK / Instagram / другое</p>
-        </div>
-    </section>
+        <li class="item">
+            <p style="margin:0 0 6px;"><strong>Соцсеть</strong></p>
+            <p class="small" style="margin:0;" th:text="${settings.social} ?: 'VK / Instagram / другое'">VK / Instagram / другое</p>
+        </li>
+    </ul>
 
-    <section class="card">
-        <h2 class="h2">Про заказ</h2>
-        <ul class="bullets">
-            <li>Повод (свадьба / день рождения / признание и т.д.)</li>
-            <li>Кому и какие детали важно упомянуть</li>
-            <li>Стиль: лирично / торжественно / с юмором</li>
-        </ul>
-        <a class="btn btn-primary" th:href="@{/order}">Перейти к форме заказа</a>
-    </section>
+    <p style="margin-top:14px;">
+        <a class="btn" th:href="@{/order}">Перейти к форме заказа</a>
+    </p>
 
 </div>
 </html>

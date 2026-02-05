@@ -1,0 +1,45 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/admin :: layout(~{::content})">
+
+<div th:fragment="content" class="stack">
+
+    <h1>Настройки сайта</h1>
+
+    <div class="card" th:if="${param.ok}">
+        <p style="margin:0;">Сохранено.</p>
+    </div>
+
+    <form th:action="@{/admin/settings}" method="post" th:object="${settings}" class="stack">
+        <div class="form-group">
+            <label>Заголовок (главная)</label>
+            <input class="input" type="text" th:field="*{heroTitle}" maxlength="120" required/>
+        </div>
+
+        <div class="form-group">
+            <label>Подзаголовок (главная)</label>
+            <textarea class="textarea" th:field="*{heroSubtitle}" maxlength="500" rows="4" required></textarea>
+        </div>
+
+        <hr class="hr"/>
+
+        <div class="form-group">
+            <label>Telegram (без @)</label>
+            <input class="input" type="text" th:field="*{telegram}" maxlength="80"/>
+        </div>
+
+        <div class="form-group">
+            <label>Телефон</label>
+            <input class="input" type="text" th:field="*{phone}" maxlength="40"/>
+        </div>
+
+        <div class="form-group">
+            <label>Соцсеть (VK / Instagram / другое)</label>
+            <input class="input" type="text" th:field="*{social}" maxlength="120"/>
+        </div>
+
+        <button class="btn" type="submit">Сохранить</button>
+    </form>
+
+</div>
+</html>
