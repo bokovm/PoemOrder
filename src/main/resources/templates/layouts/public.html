@@ -2,23 +2,23 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org"
       th:fragment="layout(content)">
 
-<head th:replace="fragments/head :: head">
+<head th:replace="~{fragments/head :: head}">
     <!-- fragments/head.html -->
 </head>
 
 <body>
 
-<header th:replace="fragments/header :: header"></header>
+<header th:replace="~{fragments/header :: header}"></header>
 
 <main class="wrap">
     <!-- Глобальные сообщения (успех/ошибка) -->
-    <div th:replace="fragments/alerts :: alerts"></div>
+    <div th:replace="~{fragments/alerts :: alerts}"></div>
 
     <!-- Контент конкретной страницы -->
     <div th:replace="${content}"></div>
 </main>
 
-<footer th:replace="fragments/footer :: footer"></footer>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 
 <!-- <script defer th:src="@{/js/app.js}"></script> -->
 </body>

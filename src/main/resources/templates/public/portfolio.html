@@ -1,0 +1,36 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/public :: layout(~{::content})">
+
+<div th:fragment="content" class="stack">
+
+    <header class="stack" style="gap:6px;">
+        <h1>Портфолио</h1>
+        <p class="muted" style="margin:0;">Опубликованные работы.</p>
+    </header>
+
+    <div class="grid">
+        <div class="card" th:if="${items == null || items.isEmpty()}">
+            <p style="margin:0;">Пока нет опубликованных работ.</p>
+        </div>
+
+        <article class="card" th:each="w : ${items}">
+            <p class="muted" style="margin:0 0 .4rem 0;">
+                <strong th:text="${w.title}">Название</strong>
+                <span th:text="${' · ' + w.kind}"> · POEM</span>
+            </p>
+
+            <p style="margin:0;"
+               th:text="${w.excerpt != null ? w.excerpt : #strings.abbreviate(w.body, 300)}">
+                Текст…
+            </p>
+        </article>
+    </div>
+
+    <div style="text-align:center; margin-top:6px;">
+        <a class="btn" th:href="@{/order}">Заказать стих</a>
+        <p class="small" style="margin:8px 0 0;">Опиши идею — я уточню детали</p>
+    </div>
+
+</div>
+</html>

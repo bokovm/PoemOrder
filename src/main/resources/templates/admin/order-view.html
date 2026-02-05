@@ -1,9 +1,37 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru"
-      th:replace="layouts/admin :: layout(~{::content})">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/admin :: layout(~{::content})}">
 
 <div th:fragment="content">
-    <h1>Заказ</h1>
-    <p class="small">В разработке. Тут будет карточка заказа.</p>
+    <h1>Заказ #<span th:text="${order.id}">1</span></h1>
+
+    <div class="stack">
+        <div><b>Дата:</b> <span th:text="${#temporals.format(order.createdAt, 'dd.MM.yyyy HH:mm')}">—</span></div>
+        <div><b>Имя:</b> <span th:text="${order.name}">—</span></div>
+        <div><b>Телефон:</b> <span th:text="${order.phone}">—</span></div>
+        <div><b>Соцсеть:</b> <span th:text="${order.social}">—</span></div>
+        <div><b>Статус:</b> <span th:text="${order.status}">NEW</span></div>
+
+        <div>
+            <b>Описание:</b>
+            <pre th:text="${order.description}" style="white-space:pre-wrap;"></pre>
+        </div>
+
+        <form th:action="@{'/admin/orders/' + ${order.id} + '/status'}" method="post" class="row">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <select name="status">
+                <option th:each="s : ${allStatuses}"
+                        th:value="${s}"
+                        th:text="${s}"
+                        th:selected="${s == order.status}">
+                </option>
+            </select>
+            <button type="submit">Сохранить статус</button>
+        </form>
+
+        <div style="margin-top:16px;">
+            <a th:href="@{/admin/orders}">← К списку</a>
+        </div>
+    </div>
 </div>
 </html>

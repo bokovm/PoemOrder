@@ -1,102 +1,182 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="layouts/public :: layout(~{::content})">
+<html lang="ru"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/public :: layout(~{::content})}">
 
-<div th:fragment="content" class="stack">
+<main th:fragment="content">
 
-    <header class="page-head">
-        <h1 th:text="${settings.heroTitle}">Стихи на заказ</h1>
-        <p class="muted" th:text="${settings.heroSubtitle}">
-            Пишу авторские стихи: поздравления, признания, свадьбы, юбилеи. По твоей истории и под нужный стиль.
-        </p>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div>
+                <!-- Заголовок с фолбэком -->
+                <h1 th:if="${settings != null and settings.heroTitle != null and !#strings.isEmpty(settings.heroTitle)}"
+                    th:text="${settings.heroTitle}">
+                    Стихи на заказ
+                </h1>
+                <h1 th:unless="${settings != null and settings.heroTitle != null and !#strings.isEmpty(settings.heroTitle)}">
+                    Стихи на заказ
+                </h1>
 
-        <p style="margin-top:14px;">
-            <a class="btn" th:href="@{/order}">Заказать стих</a>
-        </p>
-    </header>
+                <!-- Подзаголовок с фолбэком -->
+                <p class="lead"
+                   th:if="${settings != null and settings.heroSubtitle != null and !#strings.isEmpty(settings.heroSubtitle)}"
+                   th:text="${settings.heroSubtitle}">
+                    Пишу авторские стихи: поздравления, признания, свадьбы, юбилеи. По твоей истории и под нужный стиль.
+                </p>
+                <p class="lead"
+                   th:unless="${settings != null and settings.heroSubtitle != null and !#strings.isEmpty(settings.heroSubtitle)}">
+                    Пишу авторские стихи: поздравления, признания, свадьбы, юбилеи. По твоей истории и под нужный стиль.
+                </p>
 
-    <hr class="hr"/>
+                <p style="margin-top:14px;">
+                    <a class="btn" th:href="@{/order}">Заказать стих</a>
+                </p>
+            </div>
 
-    <section class="stack">
-        <h2>Портфолио</h2>
+            <aside class="how">
+                <h3>Как это работает</h3>
+                <ol class="steps">
+                    <li>Рассказываешь историю и пожелания</li>
+                    <li>Я превращаю это в стих и уточняю детали</li>
+                    <li>Ты получаешь готовый текст</li>
+                </ol>
+                <a th:href="@{/portfolio}">Посмотреть примеры →</a>
+            </aside>
+        </div>
 
-        <p class="muted" style="margin:0;">
-            Несколько примеров. Полный список — на отдельной странице.
-        </p>
+        <svg class="tear" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0,40 C120,80 240,0 360,40 C480,80 600,0 720,40 C840,80 960,0 1080,40 C1200,80 1320,0 1440,40 L1440,120 L0,120 Z"></path>
+        </svg>
+    </section>
+
+    <!-- PORTFOLIO PREVIEW -->
+    <section class="stack" style="margin-top:18px;">
+        <h2 id="portfolio">Портфолио</h2>
+        <p class="muted" style="margin:0;">Несколько примеров. Полный список — на отдельной странице.</p>
 
         <div class="grid">
-            <div class="card" th:if="${featuredWorks == null || featuredWorks.isEmpty()}">
+            <div class="card" th:if="${featuredWorks == null or #lists.isEmpty(featuredWorks)}">
                 <p style="margin:0;">Примеры скоро появятся.</p>
             </div>
 
             <article class="card" th:each="w : ${featuredWorks}">
                 <p class="muted" style="margin:0 0 .4rem 0;">
                     <strong th:text="${w.title}">Название</strong>
-                    <span th:text="' · ' + ${w.kind}"> · POEM</span>
+                    <span th:if="${w.kind != null}" th:text="${' · ' + w.kind}"> · POEM</span>
                 </p>
-                <p style="margin:0;" th:text="${w.excerpt != null ? w.excerpt : #strings.abbreviate(w.body, 220)}">
+
+                <p style="margin:0;"
+                   th:text="${w.excerpt != null and !#strings.isEmpty(w.excerpt) ? w.excerpt : #strings.abbreviate(w.body, 220)}">
                     Короткий текст…
                 </p>
             </article>
         </div>
 
-        <p style="margin-top:10px;">
-            <a th:href="@{/portfolio}">Все работы</a>
-        </p>
+        <p style="margin-top:6px;"><a th:href="@{/portfolio}">Все работы</a></p>
+
+        <div style="text-align:center; margin-top:10px;">
+            <p class="muted" style="margin:0 0 10px;">Понравился стиль? Закажи стих под свою историю.</p>
+            <a class="btn" th:href="@{/order}">Заказать стих</a>
+        </div>
     </section>
 
     <hr class="hr"/>
 
+    <!-- REVIEWS PREVIEW -->
     <section class="stack">
-        <h2>Отзывы</h2>
+        <h2 id="reviews">Отзывы</h2>
 
         <div class="grid">
-            <div class="card" th:if="${featuredReviews == null || featuredReviews.isEmpty()}">
+            <div class="card" th:if="${featuredReviews == null or #lists.isEmpty(featuredReviews)}">
                 <p style="margin:0;">Пока нет опубликованных отзывов.</p>
             </div>
 
             <article class="card" th:each="r : ${featuredReviews}">
                 <p class="muted" style="margin:0 0 .4rem 0;">
                     <strong th:text="${r.name}">Имя</strong>
-                    <span th:if="${r.telegramPublic and r.telegramUsername != null}"
-                          th:text="' · @' + r.telegramUsername"> · @username</span>
+
+                    <!-- безопасно проверяем все поля -->
+                    <span th:if="${r.telegramPublic == true and r.telegramUsername != null and !#strings.isEmpty(r.telegramUsername)}"
+                          th:text="${' · @' + r.telegramUsername}">
+                        · @username
+                    </span>
                 </p>
                 <p style="margin:0;" th:text="${r.text}">Текст отзыва</p>
             </article>
         </div>
 
-        <p style="margin-top:10px;">
-            <a th:href="@{/reviews}">Все отзывы</a>
-        </p>
+        <p style="margin-top:6px;"><a th:href="@{/reviews}">Все отзывы</a></p>
+
+        <div style="text-align:center; margin-top:10px;">
+            <h3 style="margin:0 0 10px; font-family: ui-serif, Georgia, serif;">Готов сделать заказ?</h3>
+            <a class="btn" th:href="@{/order}">Заказать стих</a>
+            <p class="small" style="margin:8px 0 0;">Займёт 1–2 минуты</p>
+        </div>
     </section>
 
     <hr class="hr"/>
 
+    <!-- CONTACTS PREVIEW -->
     <section class="stack">
-        <h2>Контакты</h2>
-        <p class="muted" style="margin:0;">Пиши удобным способом — отвечу и уточню детали заказа.</p>
+        <h2 id="contacts">Контакты</h2>
+        <p class="muted" style="margin:0;">Остались вопросы? Пиши удобным способом.</p>
 
-        <ul class="list">
-            <li class="item">
+        <div class="grid">
+            <div class="card">
                 <p style="margin:0 0 6px;"><strong>Telegram</strong></p>
                 <p class="small" style="margin:0;">
-                    <strong>@</strong><span th:text="${settings.telegram} ?: 'username'">username</span>
+                    <strong>@</strong>
+                    <span th:if="${settings != null and settings.telegram != null and !#strings.isEmpty(settings.telegram)}"
+                          th:text="${settings.telegram}">username</span>
+                    <span th:unless="${settings != null and settings.telegram != null and !#strings.isEmpty(settings.telegram)}">username</span>
                 </p>
-            </li>
-            <li class="item">
-                <p style="margin:0 0 6px;"><strong>Телефон</strong></p>
-                <p class="small" style="margin:0;" th:text="${settings.phone} ?: '+7 (___) ___-__-__'">+7 (___) ___-__-__</p>
-            </li>
-            <li class="item">
-                <p style="margin:0 0 6px;"><strong>Соцсеть</strong></p>
-                <p class="small" style="margin:0;" th:text="${settings.social} ?: 'VK / Instagram / другое'">VK / Instagram / другое</p>
-            </li>
-        </ul>
+            </div>
 
-        <p style="margin-top:10px;">
+            <div class="card">
+                <p style="margin:0 0 6px;"><strong>Телефон</strong></p>
+                <p class="small" style="margin:0;"
+                   th:if="${settings != null and settings.phone != null and !#strings.isEmpty(settings.phone)}"
+                   th:text="${settings.phone}">
+                    +7 (___) ___-__-__
+                </p>
+                <p class="small" style="margin:0;"
+                   th:unless="${settings != null and settings.phone != null and !#strings.isEmpty(settings.phone)}">
+                    +7 (___) ___-__-__
+                </p>
+            </div>
+
+            <div class="card">
+                <p style="margin:0 0 6px;"><strong>Email</strong></p>
+                <p class="small" style="margin:0;"
+                   th:if="${settings != null and settings.email != null and !#strings.isEmpty(settings.email)}"
+                   th:text="${settings.email}">
+                    example@mail.com
+                </p>
+                <p class="small" style="margin:0;"
+                   th:unless="${settings != null and settings.email != null and !#strings.isEmpty(settings.email)}">
+                    example@mail.com
+                </p>
+            </div>
+
+            <div class="card">
+                <p style="margin:0 0 6px;"><strong>Соцсеть</strong></p>
+                <p class="small" style="margin:0;"
+                   th:if="${settings != null and settings.social != null and !#strings.isEmpty(settings.social)}"
+                   th:text="${settings.social}">
+                    VK / Instagram / другое
+                </p>
+                <p class="small" style="margin:0;"
+                   th:unless="${settings != null and settings.social != null and !#strings.isEmpty(settings.social)}">
+                    VK / Instagram / другое
+                </p>
+            </div>
+        </div>
+
+        <p style="margin-top:6px;">
             <a th:href="@{/contacts}">Страница контактов</a>
         </p>
     </section>
 
-</div>
+</main>
 </html>

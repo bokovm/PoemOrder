@@ -31,8 +31,10 @@ public class SiteSettingsService {
         s.setHeroSubtitle(updated.getHeroSubtitle());
         s.setTelegram(emptyToNull(updated.getTelegram()));
         s.setPhone(emptyToNull(updated.getPhone()));
+        s.setEmail(emptyToNull(updated.getEmail()));
         s.setSocial(emptyToNull(updated.getSocial()));
         s.setUpdatedAt(Instant.now());
+
         repo.save(s);
     }
 

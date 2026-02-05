@@ -1,9 +1,37 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru"
-      th:replace="layouts/admin :: layout(~{::content})">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/admin :: layout(~{::content})}">
 
 <div th:fragment="content">
     <h1>Заказы</h1>
-    <p class="small">В разработке. Тут будет список заказов + статусы NEW/DONE.</p>
+
+    <div th:if="${orders == null || #lists.isEmpty(orders)}" class="muted">
+        Пока нет заказов.
+    </div>
+
+    <table th:if="${orders != null && !#lists.isEmpty(orders)}" class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Дата</th>
+            <th>Имя</th>
+            <th>Телефон</th>
+            <th>Соцсеть</th>
+            <th>Статус</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="o : ${orders}">
+            <td th:text="${o.id}">1</td>
+            <td th:text="${#temporals.format(o.createdAt, 'dd.MM.yyyy HH:mm')}">—</td>
+            <td th:text="${o.name}">—</td>
+            <td th:text="${o.phone}">—</td>
+            <td th:text="${o.social}">—</td>
+            <td th:text="${o.status}">NEW</td>
+            <td><a th:href="@{'/admin/orders/' + ${o.id}}">Открыть</a></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </html>

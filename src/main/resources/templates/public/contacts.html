@@ -2,37 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org"
       th:replace="layouts/public :: layout(~{::content})">
 
-<div th:fragment="content">
+<div th:fragment="content" class="stack">
 
     <h1>Контакты</h1>
-    <p class="small" style="margin-bottom:0;">
-        Пиши удобным способом — отвечу и уточню детали заказа.
-    </p>
+    <p class="muted">Напиши любым способом — отвечу и уточню детали.</p>
 
-    <hr class="hr" />
+    <!-- Телефон -->
+    <div class="card" th:if="${settings.phone != null}">
+        <h2>Телефон</h2>
+        <p class="muted">Звонки / WhatsApp / Telegram</p>
+        <a class="link"
+           th:href="'tel:' + ${settings.phone}"
+           th:text="${settings.phone}">
+            +7 000 000-00-00
+        </a>
+    </div>
 
-    <ul class="list">
-        <li class="item">
-            <p style="margin:0 0 6px;"><strong>Telegram</strong></p>
-            <p class="small" style="margin:0;">
-                <strong>@</strong><span th:text="${settings.telegram} ?: 'username'">username</span>
-            </p>
-        </li>
+    <!-- Telegram -->
+    <div class="card" th:if="${settings.telegram != null}">
+        <h2>Telegram</h2>
+        <p class="muted">Самый быстрый способ</p>
+        <a class="link"
+           th:href="'https://t.me/' + ${settings.telegram}"
+           th:text="'@' + ${settings.telegram}">
+            @telegram
+        </a>
+    </div>
 
-        <li class="item">
-            <p style="margin:0 0 6px;"><strong>Телефон</strong></p>
-            <p class="small" style="margin:0;" th:text="${settings.phone} ?: '+7 (___) ___-__-__'">+7 (___) ___-__-__</p>
-        </li>
+    <!-- Email -->
+    <div class="card" th:if="${settings.email != null}">
+        <h2>Email</h2>
+        <p class="muted">Если удобнее письмом</p>
+        <a class="link"
+           th:href="'mailto:' + ${settings.email}"
+           th:text="${settings.email}">
+            example@mail.com
+        </a>
+    </div>
 
-        <li class="item">
-            <p style="margin:0 0 6px;"><strong>Соцсеть</strong></p>
-            <p class="small" style="margin:0;" th:text="${settings.social} ?: 'VK / Instagram / другое'">VK / Instagram / другое</p>
-        </li>
-    </ul>
-
-    <p style="margin-top:14px;">
-        <a class="btn" th:href="@{/order}">Перейти к форме заказа</a>
-    </p>
+    <!-- Соцсеть -->
+    <div class="card" th:if="${settings.social != null}">
+        <h2>Соцсеть</h2>
+        <p class="muted">VK / Instagram / другое</p>
+        <p th:text="${settings.social}">VK / Instagram</p>
+    </div>
 
 </div>
 </html>

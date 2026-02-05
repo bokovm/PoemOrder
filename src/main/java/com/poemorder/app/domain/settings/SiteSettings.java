@@ -22,6 +22,12 @@ public class SiteSettings {
     @Column(name = "phone", length = 40)
     private String phone;
 
+    @Column(length = 120)
+    private String email;
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
     @Column(name = "social", length = 120)
     private String social;
 

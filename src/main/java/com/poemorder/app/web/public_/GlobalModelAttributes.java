@@ -14,28 +14,19 @@ public class GlobalModelAttributes {
         this.settingsService = settingsService;
     }
 
-    /**
-     * Новый единый источник контента/контактов для public-страниц.
-     * В шаблонах используешь ${settings.heroTitle}, ${settings.telegram}, и т.д.
-     */
     @ModelAttribute("settings")
     public SiteSettings settings() {
         return settingsService.get();
     }
 
-    /**
-     * Совместимость со старым layout (чтобы не править всё сразу).
-     * Если ты потом полностью перейдёшь на settings — эти методы можно удалить.
-     */
+    // совместимость со старым layout (если где-то ещё используется)
     @ModelAttribute("siteName")
     public String siteName(@ModelAttribute("settings") SiteSettings s) {
-        // можно вернуть отдельное поле, но пока берём heroTitle
         return s.getHeroTitle();
     }
 
     @ModelAttribute("authorName")
     public String authorName() {
-        // если хочешь тоже в БД — добавим поле в SiteSettings и миграцию
         return "Алексей Боков";
     }
 
