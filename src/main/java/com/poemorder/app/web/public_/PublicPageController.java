@@ -1,16 +1,11 @@
 package com.poemorder.app.web.public_;
 
-import com.poemorder.app.dto.OrderForm;
 import com.poemorder.app.service.PortfolioService;
 import com.poemorder.app.service.ReviewService;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class PublicPageController {
@@ -27,32 +22,34 @@ public class PublicPageController {
     public String index(Model model) {
         model.addAttribute("featuredReviews", reviewService.findApprovedForHomepage(3));
         model.addAttribute("featuredWorks", portfolioService.publishedForHomepage(3));
+        // activePage можно не ставить — но пусть будет консистентно
+        model.addAttribute("activePage", "home");
         return "public/index";
     }
 
-    /*@GetMapping("/reviews")
-    public String reviews(Model model) {
-        model.addAttribute("reviews", reviewService.getApproved());
-        return "public/reviews";
-    }*/
-
     @GetMapping("/contacts")
-    public String contacts() {
+    public String contacts(Model model) {
+        model.addAttribute("activePage", "contacts");
         return "public/contacts";
     }
 
     @GetMapping("/portfolio")
     public String portfolio(Model model) {
         model.addAttribute("items", portfolioService.publishedAll());
+        model.addAttribute("activePage", "portfolio");
         return "public/portfolio";
     }
 
-    /*@GetMapping("/order")
-    public String orderPage(Model model) {
-        model.addAttribute("activePage", "order");
-        if (!model.containsAttribute("orderForm")) {
-            model.addAttribute("orderForm", new OrderForm());
-        }
-        return "public/order";
-    }*/
+    @GetMapping("/portfolio/{id}")
+    public String portfolioItem(@PathVariable Long id, Model model) {
+        model.addAttribute("activePage", "portfolio");
+        model.addAttribute("item", portfolioService.get(id)); // уже есть метод get(id)
+        return "public/portfolio-item";
+    }
+
+    @GetMapping("/pricing")
+    public String pricing(Model model) {
+        model.addAttribute("activePage", "pricing");
+        return "public/pricing";
+    }
 }

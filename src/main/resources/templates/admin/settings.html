@@ -23,24 +23,42 @@
 
         <hr class="hr"/>
 
+        <div class="card">
+            <p style="margin:0 0 8px;"><strong>Контакты</strong></p>
+            <p class="muted" style="margin:0 0 12px;">
+                Контакты теперь настраиваются карточками: можно добавить любое название и любое значение, и (опционально) ссылку.
+            </p>
+            <p style="margin:0;">
+                <a class="btn" th:href="@{/admin/contacts}">Открыть управление контактами</a>
+            </p>
+        </div>
+
+        <hr class="hr"/>
+
+        <h2 style="margin-top:6px;">Цены и условия</h2>
+
         <div class="form-group">
-            <label>Telegram (без @)</label>
-            <input class="input" type="text" th:field="*{telegram}" maxlength="80"/>
+            <label>Заголовок страницы (опционально)</label>
+            <input class="input" type="text" th:field="*{pricingTitle}" maxlength="160"
+                   placeholder="Условия оплаты, доставки и возврата"/>
         </div>
 
         <div class="form-group">
-            <label>Телефон</label>
-            <input class="input" type="text" th:field="*{phone}" maxlength="40"/>
+            <label>Оплата</label>
+            <textarea class="textarea" th:field="*{pricingPayment}" rows="5"
+                      placeholder="Например:&#10;— 175₽ за четверостишие&#10;— срочность +50%&#10;— повторное обращение (после отзыва) — скидка"></textarea>
         </div>
 
         <div class="form-group">
-            <label>Email</label>
-            <input class="input" type="text" th:field="*{email}" maxlength="120"/>
+            <label>Доставка</label>
+            <textarea class="textarea" th:field="*{pricingDelivery}" rows="5"
+                      placeholder="Например:&#10;— отправляю в Telegram / WhatsApp / Email&#10;— можно распечатать/заламинить (по договорённости)"></textarea>
         </div>
 
         <div class="form-group">
-            <label>Соцсеть (VK / Instagram / другое)</label>
-            <input class="input" type="text" th:field="*{social}" maxlength="120"/>
+            <label>Возврат</label>
+            <textarea class="textarea" th:field="*{pricingRefund}" rows="5"
+                      placeholder="Например:&#10;— написанные на заказ стихи возврату не подлежат&#10;— корректировка бесплатна до нужного результата"></textarea>
         </div>
 
         <button class="btn" type="submit">Сохранить</button>

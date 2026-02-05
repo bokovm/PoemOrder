@@ -1,0 +1,125 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/admin :: layout(~{::content})">
+
+<div th:fragment="content" class="stack">
+
+    <h1>Контактные карточки</h1>
+    <p class="muted" style="margin:0;">
+        Здесь можно добавить любые карточки. Если <b>Ссылка</b> пустая — будет просто текст без клика.
+    </p>
+
+    <div class="alert alert-success" th:if="${param.ok}">
+        Сохранено.
+    </div>
+    <div class="alert" th:if="${param.deleted}">
+        Удалено.
+    </div>
+
+    <!-- LIST -->
+    <div class="grid" style="grid-template-columns:1fr;">
+        <div class="card" th:if="${items == null || #lists.isEmpty(items)}">
+            <p style="margin:0;">Пока нет карточек.</p>
+        </div>
+
+        <div class="card" th:each="c : ${items}">
+            <form th:action="@{/admin/contacts/save}" method="post" class="stack" style="gap:10px;">
+                <!-- CSRF -->
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                <input type="hidden" name="id" th:value="${c.id}"/>
+
+                <div class="grid" style="grid-template-columns: 1fr 1fr; gap:12px;">
+                    <div>
+                        <label>Название</label>
+                        <input name="label" th:value="${c.label}" maxlength="120" required/>
+                    </div>
+
+                    <div>
+                        <label>Значение</label>
+                        <input name="value" th:value="${c.value}" maxlength="300" required/>
+                    </div>
+                </div>
+
+                <div class="grid" style="grid-template-columns: 1fr 180px 140px; gap:12px; align-items:end;">
+                    <div>
+                        <label>Ссылка (необязательно)</label>
+                        <input name="href" th:value="${c.href}" maxlength="500"
+                               placeholder="https://... или tel:... или mailto:..."/>
+                    </div>
+
+                    <div>
+                        <label>Порядок</label>
+                        <input name="sortOrder" type="number" th:value="${c.sortOrder}"/>
+                    </div>
+
+                    <div style="padding-top:22px;">
+                        <!-- ВАЖНО: чтобы отправлялось false при снятой галке -->
+                        <input type="hidden" name="enabled" value="false"/>
+                        <label style="margin:0; display:flex; gap:8px; align-items:center;">
+                            <input type="checkbox" name="enabled" value="true" th:checked="${c.enabled}"/>
+                            Включено
+                        </label>
+                    </div>
+                </div>
+
+                <div class="actions" style="margin-top:6px;">
+                    <button class="btn" type="submit">Сохранить</button>
+
+                    <form th:action="@{|/admin/contacts/${c.id}/delete|}" method="post" style="margin:0;">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <button type="submit" onclick="return confirm('Удалить карточку?')">Удалить</button>
+                    </form>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <hr class="hr"/>
+
+    <!-- ADD NEW -->
+    <div class="card">
+        <h2 style="margin:0 0 10px;">Добавить новую</h2>
+
+        <form th:action="@{/admin/contacts/save}" method="post" class="stack" style="gap:10px;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+            <div class="grid" style="grid-template-columns: 1fr 1fr; gap:12px;">
+                <div>
+                    <label>Название</label>
+                    <input name="label" placeholder="Например: Telegram" maxlength="120" required/>
+                </div>
+
+                <div>
+                    <label>Значение</label>
+                    <input name="value" placeholder="Например: @alexey" maxlength="300" required/>
+                </div>
+            </div>
+
+            <div class="grid" style="grid-template-columns: 1fr 180px 140px; gap:12px; align-items:end;">
+                <div>
+                    <label>Ссылка (необязательно)</label>
+                    <input name="href" placeholder="https://t.me/... или tel:+7... или mailto:..."
+                           maxlength="500"/>
+                </div>
+
+                <div>
+                    <label>Порядок</label>
+                    <input name="sortOrder" type="number" value="0"/>
+                </div>
+
+                <div style="padding-top:22px;">
+                    <input type="hidden" name="enabled" value="false"/>
+                    <label style="margin:0; display:flex; gap:8px; align-items:center;">
+                        <input type="checkbox" name="enabled" value="true" checked/>
+                        Включено
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn" type="submit">Добавить</button>
+        </form>
+    </div>
+
+</div>
+</html>

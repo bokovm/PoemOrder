@@ -22,9 +22,9 @@
         </div>
 
         <div class="row" th:each="it : ${items}">
-            <div th:text="${it.title}">Title</div>
-            <div th:text="${it.kind}">POEM</div>
-            <div th:text="${it.status}">DRAFT</div>
+            <div th:text="${it.title}">Заголовок</div>
+            <div th:text="${it.kind}">СТИХ</div>
+            <div th:text="${it.status}">ЧЕРНОВИК</div>
             <div style="display:flex; gap:8px; justify-content:flex-end;">
                 <a th:href="@{|/admin/portfolio/${it.id}/edit|}">Редактировать</a>
                 <form th:action="@{|/admin/portfolio/${it.id}/delete|}" method="post" style="margin:0;"

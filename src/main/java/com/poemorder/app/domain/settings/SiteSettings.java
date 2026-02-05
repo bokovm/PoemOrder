@@ -25,11 +25,21 @@ public class SiteSettings {
     @Column(length = 120)
     private String email;
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
     @Column(name = "social", length = 120)
     private String social;
+
+    // --- PRICING / TERMS ---
+    @Column(name = "pricing_title", length = 160)
+    private String pricingTitle;
+
+    @Column(name = "pricing_payment", columnDefinition = "text")
+    private String pricingPayment;
+
+    @Column(name = "pricing_delivery", columnDefinition = "text")
+    private String pricingDelivery;
+
+    @Column(name = "pricing_refund", columnDefinition = "text")
+    private String pricingRefund;
 
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt = Instant.now();
@@ -49,8 +59,23 @@ public class SiteSettings {
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
 
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
     public String getSocial() { return social; }
     public void setSocial(String social) { this.social = social; }
+
+    public String getPricingTitle() { return pricingTitle; }
+    public void setPricingTitle(String pricingTitle) { this.pricingTitle = pricingTitle; }
+
+    public String getPricingPayment() { return pricingPayment; }
+    public void setPricingPayment(String pricingPayment) { this.pricingPayment = pricingPayment; }
+
+    public String getPricingDelivery() { return pricingDelivery; }
+    public void setPricingDelivery(String pricingDelivery) { this.pricingDelivery = pricingDelivery; }
+
+    public String getPricingRefund() { return pricingRefund; }
+    public void setPricingRefund(String pricingRefund) { this.pricingRefund = pricingRefund; }
 
     public Instant getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(Instant updatedAt) { this.updatedAt = updatedAt; }

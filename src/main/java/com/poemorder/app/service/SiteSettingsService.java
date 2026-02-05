@@ -27,14 +27,22 @@ public class SiteSettingsService {
     @Transactional
     public void update(SiteSettings updated) {
         SiteSettings s = get();
+
         s.setHeroTitle(updated.getHeroTitle());
         s.setHeroSubtitle(updated.getHeroSubtitle());
+
         s.setTelegram(emptyToNull(updated.getTelegram()));
         s.setPhone(emptyToNull(updated.getPhone()));
         s.setEmail(emptyToNull(updated.getEmail()));
         s.setSocial(emptyToNull(updated.getSocial()));
-        s.setUpdatedAt(Instant.now());
 
+        // pricing / terms
+        s.setPricingTitle(emptyToNull(updated.getPricingTitle()));
+        s.setPricingPayment(emptyToNull(updated.getPricingPayment()));
+        s.setPricingDelivery(emptyToNull(updated.getPricingDelivery()));
+        s.setPricingRefund(emptyToNull(updated.getPricingRefund()));
+
+        s.setUpdatedAt(Instant.now());
         repo.save(s);
     }
 

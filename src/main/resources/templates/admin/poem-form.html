@@ -2,8 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ru"
       th:replace="layouts/admin :: layout(~{::content})">
 
-<div th:fragment="content">
-    <h1>Стих</h1>
-    <p class="small">В разработке. Тут будет форма создания/редактирования.</p>
+<div th:fragment="content" class="stack">
+
+    <h1 th:text="${mode=='create' ? 'Добавить стих' : 'Редактирование'}">Редактирование</h1>
+
+    <div class="alert alert-success" th:if="${param.ok}">
+        Сохранено.
+    </div>
+
+    <form th:action="${mode=='create'} ? @{/admin/poems/new} : @{'/admin/poems/' + ${poem.id} + '/edit'}"
+          method="post"
+          th:object="${poem}">
+
+        <label>Название *</label>
+        <input type="text" th:field="*{title}" maxlength="120" required/>
+        <div class="small" style="color:#b00020;" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+
+        <label style="margin-top:12px;">Коротко (для списка / главной)</label>
+        <textarea th:field="*{excerpt}" maxlength="400" rows="4"></textarea>
+        <p class="small muted" style="margin:6px 0 0;">Если пусто — можно выводить обрезку из полного текста.</p>
+
+        <div class="actions" style="margin-top:12px;">
+            <div>
+                <label style="margin:0 0 6px;">Статус</label>
+                <select th:field="*{status}">
+                    <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}"></option>
+                </select>
+            </div>
+        </div>
+
+        <label style="margin-top:12px;">Полный текст *</label>
+        <textarea th:field="*{body}" rows="16" required></textarea>
+        <div class="small" style="color:#b00020;" th:if="${#fields.hasErrors('body')}" th:errors="*{body}"></div>
+
+        <p class="small muted" style="margin-top:8px;">HTML не поддерживается. Вставляй обычный текст.</p>
+
+        <div class="actions" style="margin-top:14px;">
+            <button class="btn" type="submit">Сохранить</button>
+            <a class="btn" style="background:#777;" th:href="@{/admin/poems}">Назад</a>
+        </div>
+
+    </form>
+
 </div>
 </html>
+
