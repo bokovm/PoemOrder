@@ -29,10 +29,11 @@ services:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-local}
       SERVER_PORT: 8081
 
-      APP_ADMIN_USERNAME: ${APP_ADMIN_USERNAME:-admin}
-      APP_ADMIN_PASSWORD: ${APP_ADMIN_PASSWORD:-admin}
+      APP_ADMINS: "admin:admin,alex:superpass"
+
     ports:
-      - "8081:8081"
+      - "127.0.0.1:8081:8081"
+
     depends_on:
       db:
         condition: service_healthy

@@ -17,12 +17,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-    @Value("${app.admin.username:admin}")
-    private String adminUsername;
-
-    @Value("${app.admin.password:}")
-    private String adminPassword;
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         // Хороший дефолт: Argon2.
@@ -30,19 +24,39 @@ public class SecurityConfig {
     }
 
     @Bean
-    public InMemoryUserDetailsManager userDetailsService(PasswordEncoder encoder) {
-        if (adminPassword == null || adminPassword.isBlank()) {
+    public InMemoryUserDetailsManager userDetailsService(
+            PasswordEncoder encoder,
+            @Value("${app.admins:}") String admins
+    ) {
+        if (admins == null || admins.isBlank()) {
             throw new IllegalStateException(
-                    "app.admin.password is empty. Set it via env or application-local.properties");
+                    "app.admins is empty. Example: APP_ADMINS=admin:pass,alex:pass2");
         }
 
-        UserDetails admin = User.builder()
-                .username(adminUsername)
-                .password(encoder.encode(adminPassword))
-                .roles("ADMIN")
-                .build();
+        InMemoryUserDetailsManager mgr = new InMemoryUserDetailsManager();
 
-        return new InMemoryUserDetailsManager(admin);
+        for (String pair : admins.split(",")) {
+            String p = pair.trim();
+            if (p.isEmpty()) continue;
+
+            String[] parts = p.split(":", 2);
+            if (parts.length != 2) {
+                throw new IllegalStateException("Bad admin entry: " + p + " (need user:pass)");
+            }
+
+            String username = parts[0].trim();
+            String rawPass  = parts[1].trim();
+
+            UserDetails u = User.builder()
+                    .username(username)
+                    .password(encoder.encode(rawPass))
+                    .roles("ADMIN")
+                    .build();
+
+            mgr.createUser(u);
+        }
+
+        return mgr;
     }
 
     @Bean
@@ -82,17 +96,17 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                 )
 
-                // Сессия: защита от session fixation + одна сессия
+                // Сессия: защита от session fixation + несколько сессий (чтобы вы с отцом не мешали друг другу)
                 .sessionManagement(sm -> sm
                         .sessionFixation(sf -> sf.migrateSession())
-                        .maximumSessions(1)
+                        .maximumSessions(10)
                 )
 
                 // Заголовки + запрет кеша для админки (важно!)
                 .headers(headers -> headers
                         .frameOptions(fo -> fo.deny())
                         .contentTypeOptions(Customizer.withDefaults())
-                        .cacheControl(CacheControlConfig::disable) // отключим общий, ниже добавим no-store через свой фильтр/конфиг если хочешь
+                        .cacheControl(CacheControlConfig::disable)
                 );
 
         // CSRF НЕ отключаем.
