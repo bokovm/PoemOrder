@@ -23,6 +23,7 @@
         </div>
 
         <div class="card" th:each="c : ${items}">
+            <!-- SAVE FORM -->
             <form th:action="@{/admin/contacts/save}" method="post" class="stack" style="gap:10px;">
                 <!-- CSRF -->
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
@@ -54,7 +55,7 @@
                     </div>
 
                     <div style="padding-top:22px;">
-                        <!-- ВАЖНО: чтобы отправлялось false при снятой галке -->
+                        <!-- чтобы отправлялось false при снятой галке -->
                         <input type="hidden" name="enabled" value="false"/>
                         <label style="margin:0; display:flex; gap:8px; align-items:center;">
                             <input type="checkbox" name="enabled" value="true" th:checked="${c.enabled}"/>
@@ -65,12 +66,13 @@
 
                 <div class="actions" style="margin-top:6px;">
                     <button class="btn" type="submit">Сохранить</button>
-
-                    <form th:action="@{|/admin/contacts/${c.id}/delete|}" method="post" style="margin:0;">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                        <button type="submit" onclick="return confirm('Удалить карточку?')">Удалить</button>
-                    </form>
                 </div>
+            </form>
+
+            <!-- DELETE FORM (НЕ вложенная!) -->
+            <form th:action="@{|/admin/contacts/${c.id}/delete|}" method="post" style="margin-top:10px;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <button type="submit" onclick="return confirm('Удалить карточку?')">Удалить</button>
             </form>
         </div>
     </div>
@@ -109,11 +111,11 @@
                 </div>
 
                 <div style="padding-top:22px;">
-                    <input type="hidden" name="enabled" value="false"/>
                     <label style="margin:0; display:flex; gap:8px; align-items:center;">
-                        <input type="checkbox" name="enabled" value="true" checked/>
+                        <input type="checkbox" name="enabled" value="true" th:checked="${c.enabled}"/>
                         Включено
                     </label>
+                    <input type="hidden" name="enabled" value="false"/>
                 </div>
             </div>
 

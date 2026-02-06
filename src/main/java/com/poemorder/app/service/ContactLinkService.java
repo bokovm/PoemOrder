@@ -3,6 +3,7 @@ package com.poemorder.app.service;
 import com.poemorder.app.domain.settings.ContactLink;
 import com.poemorder.app.repo.ContactLinkRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,22 +16,38 @@ public class ContactLinkService {
         this.repo = repo;
     }
 
+    @Transactional(readOnly = true)
     public List<ContactLink> publicList() {
         return repo.findAllByEnabledTrueOrderBySortOrderAsc();
     }
 
+    @Transactional(readOnly = true)
     public List<ContactLink> adminList() {
         return repo.findAllByOrderBySortOrderAsc();
     }
 
-    public ContactLink get(Long id) {
-        return repo.findById(id).orElseThrow();
+    @Transactional
+    public ContactLink upsert(Long id,
+                              String label,
+                              String value,
+                              String href,
+                              int sortOrder,
+                              boolean enabled) {
+
+        ContactLink entity = (id == null)
+                ? new ContactLink()
+                : repo.findById(id).orElseThrow(() -> new IllegalArgumentException("ContactLink not found: " + id));
+
+        entity.setLabel(label);
+        entity.setValue(value);
+        entity.setHref(href);
+        entity.setSortOrder(sortOrder);
+        entity.setEnabled(enabled);
+
+        return repo.save(entity);
     }
 
-    public ContactLink save(ContactLink c) {
-        return repo.save(c);
-    }
-
+    @Transactional
     public void delete(Long id) {
         repo.deleteById(id);
     }

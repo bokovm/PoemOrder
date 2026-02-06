@@ -10,27 +10,69 @@ public class ContactLink {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, length = 120)
     private String label;
+
+    @Column(nullable = false, length = 300)
     private String value;
+
+    @Column(length = 500)
     private String href;
-    private int sortOrder;
+
+    @Column(name = "sort_order", nullable = false)
+    private int sortOrder = 0;
+
+    @Column(nullable = false)
     private boolean enabled = true;
 
-    // getters/setters
-    public Long getId() { return id; }
+    // --- getters/setters ---
 
-    public String getLabel() { return label; }
-    public void setLabel(String label) { this.label = label; }
+    public Long getId() {
+        return id;
+    }
 
-    public String getValue() { return value; }
-    public void setValue(String value) { this.value = value; }
+    // ВАЖНО: без этого будет дублирование при save()
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getHref() { return href; }
-    public void setHref(String href) { this.href = href; }
+    public String getLabel() {
+        return label;
+    }
 
-    public int getSortOrder() { return sortOrder; }
-    public void setSortOrder(int sortOrder) { this.sortOrder = sortOrder; }
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-    public boolean isEnabled() { return enabled; }
-    public void setEnabled(boolean enabled) { this.enabled = enabled; }
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
+    }
+
+    public int getSortOrder() {
+        return sortOrder;
+    }
+
+    public void setSortOrder(int sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 }

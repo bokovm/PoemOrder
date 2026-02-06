@@ -19,19 +19,28 @@ public class AdminContactLinkController {
     @GetMapping
     public String list(Model model) {
         model.addAttribute("items", service.adminList());
-        model.addAttribute("newItem", new ContactLink());
         return "admin/contacts-list";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute ContactLink item) {
-        service.save(item);
-        return "redirect:/admin/contacts";
+    public String save(
+            @RequestParam(required = false) Long id,
+            @RequestParam String label,
+            @RequestParam String value,
+            @RequestParam(required = false) String href,
+            @RequestParam(defaultValue = "0") int sortOrder,
+            @RequestParam(required = false) Boolean enabled
+    ) {
+        // enabled приходит только если checkbox включён
+        boolean enabledValue = (enabled != null);
+
+        service.upsert(id, label, value, href, sortOrder, enabledValue);
+        return "redirect:/admin/contacts?ok";
     }
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id) {
         service.delete(id);
-        return "redirect:/admin/contacts";
+        return "redirect:/admin/contacts?deleted";
     }
 }
