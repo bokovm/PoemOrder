@@ -25,15 +25,20 @@
             <div class="form-group" style="min-width:220px;">
                 <label>Тип</label>
                 <select class="input" th:field="*{kind}">
-                    <option th:each="k : ${kinds}" th:value="${k}" th:text="${k}">СТИХ</option>
+                    <option th:each="k : ${kinds}"
+                            th:value="${k}"
+                            th:text="${k.label}">
+                    </option>
                 </select>
             </div>
 
             <div class="form-group" style="min-width:220px;">
                 <label>Статус</label>
                 <select class="input" th:field="*{status}">
-                    <option th:each="s : ${statuses}" th:value="${s}" th:text="${s}">ЧЕРНОВИК</option>
-                </select>
+                    <option th:each="s : ${statuses}"
+                            th:value="${s}"
+                            th:text="${s.label}">
+                    </option>
             </div>
         </div>
 
