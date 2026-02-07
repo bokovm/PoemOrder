@@ -27,16 +27,21 @@ public class AdminPortfolioController {
     @GetMapping("/new")
     public String createForm(Model model) {
         PortfolioItem item = new PortfolioItem();
-        item.setKind(PortfolioKind.POEM);
+        item.setKind(PortfolioKind.OTHER);
         item.setStatus(PoemStatus.DRAFT);
+
         model.addAttribute("item", item);
-        model.addAttribute("kinds", PortfolioKind.values());
+        model.addAttribute("kinds", new PortfolioKind[]{PortfolioKind.PROSE, PortfolioKind.OTHER});
         model.addAttribute("statuses", PoemStatus.values());
         return "admin/portfolio-form";
     }
 
     @PostMapping("/new")
     public String create(@ModelAttribute("item") PortfolioItem item) {
+        // На всякий: запретим случайный POEM через форму/подмену
+        if (item.getKind() == PortfolioKind.POEM) {
+            item.setKind(PortfolioKind.OTHER);
+        }
         portfolioService.save(item);
         return "redirect:/admin/portfolio";
     }
@@ -44,7 +49,7 @@ public class AdminPortfolioController {
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model) {
         model.addAttribute("item", portfolioService.get(id));
-        model.addAttribute("kinds", PortfolioKind.values());
+        model.addAttribute("kinds", new PortfolioKind[]{PortfolioKind.PROSE, PortfolioKind.OTHER});
         model.addAttribute("statuses", PoemStatus.values());
         return "admin/portfolio-form";
     }
@@ -52,11 +57,17 @@ public class AdminPortfolioController {
     @PostMapping("/{id}/edit")
     public String edit(@PathVariable Long id, @ModelAttribute("item") PortfolioItem item) {
         PortfolioItem existing = portfolioService.get(id);
+
         existing.setTitle(item.getTitle());
         existing.setExcerpt(item.getExcerpt());
         existing.setBody(item.getBody());
-        existing.setKind(item.getKind());
+
+        PortfolioKind kind = item.getKind();
+        if (kind == PortfolioKind.POEM) kind = PortfolioKind.OTHER;
+        existing.setKind(kind);
+
         existing.setStatus(item.getStatus());
+
         portfolioService.save(existing);
         return "redirect:/admin/portfolio";
     }

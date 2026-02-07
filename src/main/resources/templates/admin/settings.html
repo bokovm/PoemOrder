@@ -23,6 +23,23 @@
 
         <hr class="hr"/>
 
+        <h2 style="margin-top:6px;">Портфолио</h2>
+
+        <div class="form-group">
+            <label>Заголовок (портфолио)</label>
+            <input class="input" type="text" th:field="*{portfolioTitle}" maxlength="120"
+                   placeholder="Портфолио"/>
+        </div>
+
+        <div class="form-group">
+            <label>Описание (портфолио)</label>
+            <textarea class="textarea" th:field="*{portfolioSubtitle}" maxlength="1000" rows="4"
+                      placeholder="Например:&#10;Меня зовут Алексей...&#10;Пишу стихи на заказ...&#10;Ниже — примеры работ."></textarea>
+            <p class="muted" style="margin:6px 0 0;">Можно писать в несколько строк — переносы сохранятся.</p>
+        </div>
+
+        <hr class="hr"/>
+
         <div class="card">
             <p style="margin:0 0 8px;"><strong>Контакты</strong></p>
             <p class="muted" style="margin:0 0 12px;">

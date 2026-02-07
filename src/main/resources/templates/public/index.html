@@ -70,7 +70,7 @@
             <article class="card" th:each="w : ${featuredWorks}">
                 <p class="muted">
                     <strong th:text="${w.title}"></strong>
-                    <span th:if="${w.kind}" th:text="${' · ' + w.kind}"></span>
+                    <span class="muted"> · Стих</span>
                 </p>
 
                 <p th:text="${w.excerpt ?: #strings.abbreviate(w.body, 220)}"></p>

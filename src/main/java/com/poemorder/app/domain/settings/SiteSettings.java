@@ -28,6 +28,13 @@ public class SiteSettings {
     @Column(name = "social", length = 120)
     private String social;
 
+    // --- PORTFOLIO TEXTS ---
+    @Column(name = "portfolio_title", length = 120)
+    private String portfolioTitle;
+
+    @Column(name = "portfolio_subtitle", columnDefinition = "text")
+    private String portfolioSubtitle;
+
     // --- PRICING / TERMS ---
     @Column(name = "pricing_title", length = 160)
     private String pricingTitle;
@@ -64,6 +71,12 @@ public class SiteSettings {
 
     public String getSocial() { return social; }
     public void setSocial(String social) { this.social = social; }
+
+    public String getPortfolioTitle() { return portfolioTitle; }
+    public void setPortfolioTitle(String portfolioTitle) { this.portfolioTitle = portfolioTitle; }
+
+    public String getPortfolioSubtitle() { return portfolioSubtitle; }
+    public void setPortfolioSubtitle(String portfolioSubtitle) { this.portfolioSubtitle = portfolioSubtitle; }
 
     public String getPricingTitle() { return pricingTitle; }
     public void setPricingTitle(String pricingTitle) { this.pricingTitle = pricingTitle; }

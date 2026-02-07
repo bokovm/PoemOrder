@@ -1,6 +1,7 @@
 package com.poemorder.app.service;
 
 import com.poemorder.app.domain.poem.Poem;
+import com.poemorder.app.domain.poem.PoemStatus;
 import com.poemorder.app.repo.PoemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,5 +49,18 @@ public class PoemService {
     @Transactional
     public void delete(Long id) {
         poemRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Poem> publishedAll() {
+        return poemRepository.findAllByStatusOrderByUpdatedAtDesc(PoemStatus.PUBLISHED);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Poem> publishedForHomepage(int limit) {
+        return poemRepository.findAllByStatusOrderByUpdatedAtDesc(PoemStatus.PUBLISHED)
+                .stream()
+                .limit(limit)
+                .toList();
     }
 }

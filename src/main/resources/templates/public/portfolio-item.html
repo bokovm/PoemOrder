@@ -10,7 +10,7 @@
 
     <header class="stack" style="gap:6px;">
         <h1 th:text="${item.title}">Название</h1>
-        <p class="muted" style="margin:0;" th:text="${item.kind + ' · ' + item.status}">СТИХ · ОПУБЛИКОВАТЬ</p>
+        <p class="muted" th:text="${'Стих · ' + item.status}">Стих · PUBLISHED</p>
     </header>
 
     <div class="card">
