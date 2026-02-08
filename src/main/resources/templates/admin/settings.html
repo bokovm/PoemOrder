@@ -11,6 +11,9 @@
     </div>
 
     <form th:action="@{/admin/settings}" method="post" th:object="${settings}" class="stack">
+        <!-- CSRF -->
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
         <div class="form-group">
             <label>Заголовок (главная)</label>
             <input class="input" type="text" th:field="*{heroTitle}" maxlength="120" required/>
@@ -33,7 +36,7 @@
 
         <div class="form-group">
             <label>Описание (портфолио)</label>
-            <textarea class="textarea" th:field="*{portfolioSubtitle}" maxlength="1000" rows="4"
+            <textarea class="textarea" th:field="*{portfolioSubtitle}" rows="5"
                       placeholder="Например:&#10;Меня зовут Алексей...&#10;Пишу стихи на заказ...&#10;Ниже — примеры работ."></textarea>
             <p class="muted" style="margin:6px 0 0;">Можно писать в несколько строк — переносы сохранятся.</p>
         </div>
@@ -62,20 +65,17 @@
 
         <div class="form-group">
             <label>Оплата</label>
-            <textarea class="textarea" th:field="*{pricingPayment}" rows="5"
-                      placeholder="Например:&#10;— 175₽ за четверостишие&#10;— срочность +50%&#10;— повторное обращение (после отзыва) — скидка"></textarea>
+            <textarea class="textarea" th:field="*{pricingPayment}" rows="5"></textarea>
         </div>
 
         <div class="form-group">
             <label>Доставка</label>
-            <textarea class="textarea" th:field="*{pricingDelivery}" rows="5"
-                      placeholder="Например:&#10;— отправляю в Telegram / WhatsApp / Email&#10;— можно распечатать/заламинить (по договорённости)"></textarea>
+            <textarea class="textarea" th:field="*{pricingDelivery}" rows="5"></textarea>
         </div>
 
         <div class="form-group">
             <label>Возврат</label>
-            <textarea class="textarea" th:field="*{pricingRefund}" rows="5"
-                      placeholder="Например:&#10;— написанные на заказ стихи возврату не подлежат&#10;— корректировка бесплатна до нужного результата"></textarea>
+            <textarea class="textarea" th:field="*{pricingRefund}" rows="5"></textarea>
         </div>
 
         <button class="btn" type="submit">Сохранить</button>

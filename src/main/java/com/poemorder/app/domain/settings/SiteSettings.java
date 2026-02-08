@@ -16,6 +16,7 @@ public class SiteSettings {
     @Column(name = "hero_subtitle", nullable = false, length = 500)
     private String heroSubtitle;
 
+    // Старые поля контактов можно оставить (в БД уже есть), но в UI ты их больше не используешь.
     @Column(name = "telegram", length = 80)
     private String telegram;
 

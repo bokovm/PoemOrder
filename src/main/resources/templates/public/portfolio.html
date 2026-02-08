@@ -5,10 +5,9 @@
 <div th:fragment="content" class="stack">
 
     <header class="stack" style="gap:6px;">
-        <h1 th:text="${settings.portfolioTitle ?: 'Портфолио'}">Портфолио</h1>
-
-        <p class="muted" style="margin:0; white-space: pre-line;"
-           th:text="${settings.portfolioSubtitle ?: 'Опубликованные работы.'}">
+        <h1 th:text="${settings.portfolioTitle != null ? settings.portfolioTitle : 'Портфолио'}">Портфолио</h1>
+        <p class="muted" style="margin:0;"
+           th:text="${settings.portfolioSubtitle != null ? settings.portfolioSubtitle : 'Опубликованные работы.'}">
             Опубликованные работы.
         </p>
     </header>
@@ -25,7 +24,7 @@
                 <div>
                     <p class="muted" style="margin:0 0 .4rem 0;">
                         <strong th:text="${w.title}">Название</strong>
-                        <span class="muted"> · Стих</span>
+                        <span th:text="${' · ' + w.kind}"> · POEM</span>
                     </p>
                 </div>
 
