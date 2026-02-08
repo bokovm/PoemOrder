@@ -18,30 +18,54 @@
         <!-- CSRF -->
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
+        <!-- id (важно для edit; в create будет пусто и ок) -->
+        <input type="hidden" th:field="*{id}"/>
+
         <div class="form-group">
-            <label>Название *</label>
-            <input class="input" type="text" th:field="*{title}" maxlength="120" required/>
-            <div class="small" style="color:#b00020;" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+            <label for="title">Название *</label>
+            <input id="title" class="input" type="text"
+                   th:field="*{title}"
+                   maxlength="120"
+                   required/>
+            <div class="small" style="color:#b00020;"
+                 th:if="${#fields.hasErrors('title')}"
+                 th:errors="*{title}"></div>
         </div>
 
         <div class="form-group">
-            <label>Коротко (для списка / главной)</label>
-            <textarea class="textarea" th:field="*{excerpt}" maxlength="400" rows="4"></textarea>
-            <p class="muted" style="margin:6px 0 0;">Если пусто — можно выводить обрезку из полного текста.</p>
+            <label for="excerpt">Коротко (для списка / главной)</label>
+            <textarea id="excerpt" class="textarea"
+                      th:field="*{excerpt}"
+                      maxlength="400"
+                      rows="4"></textarea>
+            <p class="muted" style="margin:6px 0 0;">
+                Если пусто — можно выводить обрезку из полного текста.
+            </p>
         </div>
 
         <div class="form-group" style="max-width:320px;">
-            <label>Статус</label>
-            <select class="input" th:field="*{status}">
-                <option th:each="s : ${statuses}" th:value="${s}" th:text="${s.label}">Опубликовано</option>
+            <label for="status">Статус</label>
+            <select id="status" class="input" th:field="*{status}">
+                <option th:each="s : ${statuses}"
+                        th:value="${s}"
+                        th:text="${s.label}">
+                    Опубликовано
+                </option>
             </select>
         </div>
 
         <div class="form-group">
-            <label>Полный текст *</label>
-            <textarea class="textarea" th:field="*{body}" rows="16" required></textarea>
-            <div class="small" style="color:#b00020;" th:if="${#fields.hasErrors('body')}" th:errors="*{body}"></div>
-            <p class="muted" style="margin:6px 0 0;">HTML не поддерживается. Вставляй обычный текст.</p>
+            <label for="body">Полный текст *</label>
+            <textarea id="body" class="textarea"
+                      th:field="*{body}"
+                      rows="16"
+                      required></textarea>
+            <div class="small" style="color:#b00020;"
+                 th:if="${#fields.hasErrors('body')}"
+                 th:errors="*{body}"></div>
+            <p class="muted" style="margin:6px 0 0;">
+                HTML не поддерживается. Вставляй обычный текст.
+            </p>
         </div>
 
         <div style="display:flex; gap:12px; flex-wrap:wrap;">

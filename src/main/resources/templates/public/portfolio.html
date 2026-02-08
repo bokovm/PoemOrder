@@ -6,6 +6,7 @@
 
     <header class="stack" style="gap:6px;">
         <h1 th:text="${settings.portfolioTitle != null ? settings.portfolioTitle : 'Портфолио'}">Портфолио</h1>
+
         <p class="muted" style="margin:0;"
            th:text="${settings.portfolioSubtitle != null ? settings.portfolioSubtitle : 'Опубликованные работы.'}">
             Опубликованные работы.
@@ -21,12 +22,10 @@
         <article class="card" th:each="w : ${items}">
             <div class="portfolio-card">
 
-                <div>
-                    <p class="muted" style="margin:0 0 .4rem 0;">
-                        <strong th:text="${w.title}">Название</strong>
-                        <span th:text="${' · ' + w.kind}"> · POEM</span>
-                    </p>
-                </div>
+                <p class="muted" style="margin:0 0 .4rem 0;">
+                    <strong th:text="${w.title}">Название</strong>
+                    <span class="muted"> · Стих</span>
+                </p>
 
                 <p class="portfolio-excerpt"
                    th:text="${w.excerpt != null ? w.excerpt : #strings.abbreviate(w.body, 300)}">

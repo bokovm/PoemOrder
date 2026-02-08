@@ -16,19 +16,6 @@ public class SiteSettings {
     @Column(name = "hero_subtitle", nullable = false, length = 500)
     private String heroSubtitle;
 
-    // Старые поля контактов можно оставить (в БД уже есть), но в UI ты их больше не используешь.
-    @Column(name = "telegram", length = 80)
-    private String telegram;
-
-    @Column(name = "phone", length = 40)
-    private String phone;
-
-    @Column(length = 120)
-    private String email;
-
-    @Column(name = "social", length = 120)
-    private String social;
-
     // --- PORTFOLIO TEXTS ---
     @Column(name = "portfolio_title", length = 120)
     private String portfolioTitle;
@@ -49,6 +36,19 @@ public class SiteSettings {
     @Column(name = "pricing_refund", columnDefinition = "text")
     private String pricingRefund;
 
+    // (старые контакты можешь оставить, даже если публичка теперь через ContactLink)
+    @Column(name = "telegram", length = 80)
+    private String telegram;
+
+    @Column(name = "phone", length = 40)
+    private String phone;
+
+    @Column(length = 120)
+    private String email;
+
+    @Column(name = "social", length = 120)
+    private String social;
+
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt = Instant.now();
 
@@ -60,18 +60,6 @@ public class SiteSettings {
 
     public String getHeroSubtitle() { return heroSubtitle; }
     public void setHeroSubtitle(String heroSubtitle) { this.heroSubtitle = heroSubtitle; }
-
-    public String getTelegram() { return telegram; }
-    public void setTelegram(String telegram) { this.telegram = telegram; }
-
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getSocial() { return social; }
-    public void setSocial(String social) { this.social = social; }
 
     public String getPortfolioTitle() { return portfolioTitle; }
     public void setPortfolioTitle(String portfolioTitle) { this.portfolioTitle = portfolioTitle; }
@@ -90,6 +78,18 @@ public class SiteSettings {
 
     public String getPricingRefund() { return pricingRefund; }
     public void setPricingRefund(String pricingRefund) { this.pricingRefund = pricingRefund; }
+
+    public String getTelegram() { return telegram; }
+    public void setTelegram(String telegram) { this.telegram = telegram; }
+
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getSocial() { return social; }
+    public void setSocial(String social) { this.social = social; }
 
     public Instant getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(Instant updatedAt) { this.updatedAt = updatedAt; }

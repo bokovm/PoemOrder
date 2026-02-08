@@ -31,22 +31,21 @@ public class SiteSettingsService {
         s.setHeroTitle(updated.getHeroTitle());
         s.setHeroSubtitle(updated.getHeroSubtitle());
 
-        // Portfolio texts
+        // portfolio texts
         s.setPortfolioTitle(emptyToNull(updated.getPortfolioTitle()));
         s.setPortfolioSubtitle(emptyToNull(updated.getPortfolioSubtitle()));
-
-        // Старые контакты можно оставить — но админка их сейчас не редактирует.
-        // Если хочешь НЕ затирать их null-ами, просто закомментируй блок ниже.
-        s.setTelegram(emptyToNull(updated.getTelegram()));
-        s.setPhone(emptyToNull(updated.getPhone()));
-        s.setEmail(emptyToNull(updated.getEmail()));
-        s.setSocial(emptyToNull(updated.getSocial()));
 
         // pricing / terms
         s.setPricingTitle(emptyToNull(updated.getPricingTitle()));
         s.setPricingPayment(emptyToNull(updated.getPricingPayment()));
         s.setPricingDelivery(emptyToNull(updated.getPricingDelivery()));
         s.setPricingRefund(emptyToNull(updated.getPricingRefund()));
+
+        // legacy contacts (можешь удалить позже)
+        s.setTelegram(emptyToNull(updated.getTelegram()));
+        s.setPhone(emptyToNull(updated.getPhone()));
+        s.setEmail(emptyToNull(updated.getEmail()));
+        s.setSocial(emptyToNull(updated.getSocial()));
 
         s.setUpdatedAt(Instant.now());
         repo.save(s);

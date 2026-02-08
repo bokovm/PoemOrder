@@ -10,7 +10,10 @@
 
     <header class="stack" style="gap:6px;">
         <h1 th:text="${item.title}">Название</h1>
-        <p class="muted" th:text="${'Стих · ' + item.status}">Стих · PUBLISHED</p>
+        <p class="muted" style="margin:0;"
+           th:text="${'Стих · ' + (item.status != null ? item.status : '')}">
+            Стих · PUBLISHED
+        </p>
     </header>
 
     <div class="card">
