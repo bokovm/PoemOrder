@@ -1,33 +1,80 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+### === OS / Editor junk ===
+.DS_Store
+Thumbs.db
+desktop.ini
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Windows Zone.Identifier (критично в твоём случае)
+*Zone.Identifier*
+*:Zone.Identifier
+*~Zone.Identifier*
 
-### IntelliJ IDEA ###
-.idea
-*.iws
+# Vim / Nano / Emacs
+*.swp
+*.swo
+*~
+.#*
+#*
+
+### === IntelliJ IDEA ===
+.idea/
 *.iml
 *.ipr
+*.iws
+out/
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
+### === VS Code ===
 .vscode/
+
+### === Eclipse / STS ===
+.project
+.classpath
+.settings/
+
+### === Maven ===
+/target/
+.mvn/wrapper/maven-wrapper.jar
+
+### === Gradle (если вдруг появится) ===
+.gradle/
+build/
+
+### === Spring Boot ===
+*.log
+logs/
+hs_err_pid*
+
+### === Application config / secrets ===
+.env
+.env.*
+!.env.example
+
+application-local.properties
+application-prod.properties
+application-dev.properties
+
+### === Docker ===
+docker-compose.override.yml
+
+### === Test / coverage ===
+/coverage/
+*.exec
+
+### === Linux ===
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+### === Temporary files ===
+tmp/
+temp/
+*.tmp
+
+### === Certificates / keys ===
+*.pem
+*.key
+*.crt
+
+### === Optional: backups ===
+*.bak
+*.old
