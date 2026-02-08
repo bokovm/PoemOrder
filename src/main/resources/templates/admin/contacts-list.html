@@ -111,11 +111,12 @@
                 </div>
 
                 <div style="padding-top:22px;">
+                    <!-- по умолчанию включено -->
+                    <input type="hidden" name="enabled" value="false"/>
                     <label style="margin:0; display:flex; gap:8px; align-items:center;">
-                        <input type="checkbox" name="enabled" value="true" th:checked="${c.enabled}"/>
+                        <input type="checkbox" name="enabled" value="true" checked/>
                         Включено
                     </label>
-                    <input type="hidden" name="enabled" value="false"/>
                 </div>
             </div>
 
